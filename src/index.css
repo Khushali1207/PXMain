@@ -1,0 +1,48 @@
+/* ===============================
+   GLOBAL TOUCH & CURSOR EFFECTS
+================================ */
+
+/* 1. Mobile Touch Ripple Animation */
+@keyframes touch-ripple {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.animate-touch-ripple {
+  animation: touch-ripple 0.6s ease-out forwards;
+}
+
+/* 2. Custom Desktop Cursor Style (Optional: makes it look like a startup app) */
+@media (min-width: 1024px) {
+  .custom-cursor {
+    width: 20px;
+    height: 20px;
+    background: hsl(var(--primary) / 0.5);
+    border: 2px solid hsl(var(--primary));
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease-out;
+    mix-blend-mode: difference; /* Cursor text ke upar color badlega */
+  }
+}
+
+/* 3. Global Input Focus Polish */
+input:focus, textarea:focus {
+  outline: none;
+  border-color: hsl(var(--primary)) !important;
+  box-shadow: 0 0 15px hsl(var(--primary) / 0.3);
+  transition: all 0.3s ease;
+}
+
+/* 4. Tap Highlight Remove (Mobile standard) */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
