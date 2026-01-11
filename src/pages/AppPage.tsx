@@ -94,60 +94,7 @@ const AppPage = () => {
           ))}
         </div>
 
-        {/* --- SYMMETRIC CONVERTER ORBIT --- */}
-        <div className="max-w-5xl mx-auto mb-32 relative">
-          <div className="glass rounded-[3.5rem] p-12 border border-white/10 relative overflow-hidden bg-gradient-to-br from-white/5 to-transparent shadow-2xl">
-            <div className="relative z-10 flex flex-col items-center">
-              <div className="flex items-center gap-2 text-primary font-mono text-xs mb-6 tracking-[0.3em] uppercase opacity-70">
-                <CheckCircle2 className="w-4 h-4" /> Universal X-Engine
-              </div>
-              
-              <h2 className="text-4xl md:text-5xl font-black text-center mb-16 tracking-tight">
-                Any Format <span className="text-primary">↔</span> Perfect Print
-              </h2>
-
-              <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 mb-12 w-full">
-                <div className="flex flex-row md:flex-col gap-6">
-                  <div className="w-20 h-20 glass rounded-3xl flex flex-col items-center justify-center border-orange-500/30 text-orange-500 hover:scale-110 transition-all shadow-lg group/icon">
-                    <Presentation className="w-8 h-8 group-hover/icon:scale-110 transition-transform" />
-                    <span className="text-[10px] font-bold mt-1 opacity-60">PPT</span>
-                  </div>
-                  <div className="w-20 h-20 glass rounded-3xl flex flex-col items-center justify-center border-orange-400/20 text-orange-400 hover:scale-110 transition-all shadow-lg group/icon">
-                    <Presentation className="w-8 h-8 opacity-70 group-hover/icon:scale-110 transition-transform" />
-                    <span className="text-[10px] font-bold mt-1 opacity-60">PPTX</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <ArrowRightLeft className="w-8 h-8 text-primary/30 animate-pulse hidden md:block" />
-                  <div className="relative group">
-                    <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full group-hover:bg-primary/40 transition-all duration-700" />
-                    <div className="w-28 h-28 glass rounded-full flex flex-col items-center justify-center border-primary text-white relative z-10 animate-float shadow-[0_0_50px_rgba(var(--primary),0.2)]">
-                      <FileText className="w-12 h-12 text-primary" />
-                      <span className="text-[10px] font-black text-primary tracking-widest mt-1 uppercase">PDF</span>
-                    </div>
-                  </div>
-                  <ArrowRightLeft className="w-8 h-8 text-primary/40 animate-pulse hidden md:block" />
-                </div>
-
-                <div className="flex flex-row md:flex-col gap-6">
-                  <div className="w-20 h-20 glass rounded-3xl flex flex-col items-center justify-center border-blue-500/30 text-blue-400 hover:scale-110 transition-all shadow-lg group/icon">
-                    <FileText className="w-8 h-8 group-hover/icon:scale-110 transition-transform" />
-                    <span className="text-[10px] font-bold mt-1 opacity-60">WORD</span>
-                  </div>
-                  <div className="w-20 h-20 glass rounded-3xl flex flex-col items-center justify-center border-cyan-500/30 text-cyan-400 hover:scale-110 transition-all shadow-lg group/icon">
-                    <FileCode className="w-8 h-8 group-hover/icon:scale-110 transition-transform" />
-                    <span className="text-[10px] font-bold mt-1 opacity-60">DOCX</span>
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-gray-400 text-center max-w-lg text-lg leading-relaxed mt-4">
-                Symmetric processing for <span className="text-white font-medium">Zero Formatting Errors</span>. PPT, Word, or PDF—we handle it all.
-              </p>
-            </div>
-          </div>
-        </div>
+        
 
         {/* --- WAITLIST SECTION --- */}
         <div className="max-w-4xl mx-auto glass rounded-[3rem] p-12 glow-primary text-center border-white/5 shadow-2xl relative overflow-hidden">

@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom"; // useNavigate add kiya
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import pxLogo from "@/assets/px-logo.png";
-import { Menu, X, LogOut } from "lucide-react"; // LogOut icon add kiya
+import { Menu, X, LogOut, FileType } from "lucide-react"; // FileType icon add kiya converter ke liye
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate(); // Navigation handle karne ke liye
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,15 +18,14 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // --- LOGOUT LOGIC ---
   const handleLogout = () => {
-    localStorage.removeItem("px_token"); // Token delete
-    window.location.reload(); // App state refresh karne ke liye
-    // Ya phir navigate("/login") bhi use kar sakte hain
+    localStorage.removeItem("px_token");
+    window.location.reload();
   };
 
+  // --- NAV LINKS (Converter Add Kardiya) ---
   const navLinks = [
-    { to: "/home", label: "Home" }, // Path theek kiya
+    { to: "/home", label: "Home" },
     { to: "/about", label: "About" },
     { to: "/story", label: "Our Story" },
     { to: "/founders", label: "Founders" },
@@ -52,19 +51,23 @@ const Navigation = () => {
               <li key={link.to}>
                 <Link
                   to={link.to}
-                  className={`font-body font-medium smooth-transition hover:text-primary ${
+                  className={`font-body font-medium smooth-transition hover:text-primary relative group ${
                     location.pathname === link.to
                       ? "text-primary"
                       : "text-foreground"
                   }`}
                 >
                   {link.label}
+                  {/* Underline effect for active link */}
+                  {location.pathname === link.to && (
+                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary animate-in fade-in zoom-in duration-300" />
+                  )}
                 </Link>
               </li>
             ))}
           </ul>
 
-          {/* Logout Button for Desktop */}
+          {/* Logout Button */}
           <button 
             onClick={handleLogout}
             className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 group"
@@ -76,7 +79,7 @@ const Navigation = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-foreground"
+          className="md:hidden text-foreground p-2"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -85,31 +88,31 @@ const Navigation = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden glass mt-4 mx-4 rounded-2xl p-6 animate-scale-in border border-white/10">
+        <div className="md:hidden glass mt-4 mx-4 rounded-3xl p-6 animate-in slide-in-from-top-5 duration-300 border border-white/10 shadow-2xl">
           <ul className="space-y-4">
             {navLinks.map((link) => (
               <li key={link.to}>
                 <Link
                   to={link.to}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block font-body font-medium smooth-transition hover:text-primary ${
+                  className={`flex items-center justify-between font-body font-semibold text-lg py-2 smooth-transition ${
                     location.pathname === link.to
-                      ? "text-primary"
+                      ? "text-primary translate-x-2"
                       : "text-foreground"
                   }`}
                 >
                   {link.label}
+                  {location.pathname === link.to && <span className="w-2 h-2 bg-primary rounded-full" />}
                 </Link>
               </li>
             ))}
             
-            {/* Logout Button for Mobile */}
             <li className="pt-4 border-t border-white/10">
               <button 
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-red-500 text-white font-bold"
+                className="w-full flex items-center justify-center gap-3 py-4 rounded-2xl bg-red-500 text-white font-black text-lg shadow-lg active:scale-95 transition-transform"
               >
-                <LogOut size={20} />
+                <LogOut size={22} />
                 Logout
               </button>
             </li>

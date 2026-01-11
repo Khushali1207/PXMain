@@ -16,7 +16,6 @@ const AuthPage = () => {
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
   });
   const [errors, setErrors] = useState({});
 
@@ -24,30 +23,18 @@ const AuthPage = () => {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   };
 
-  // const handleGoogleLogin = async () => {
-  //   try {
-  //     const result = await signInWithPopup(auth, googleProvider);
-  //     localStorage.setItem("px_token", result.user.accessToken);
-  //     toast.success(`Welcome ${result.user.displayName}! 🚀`);
-  //     window.location.href = "/home";
-  //   } catch (error) {
-  //     toast.error("Google Login Failed!");
-  //   }
-  // };
-
   const handleGoogleLogin = async () => {
-  try {
-    console.log("Google login clicked");
-    const result = await signInWithPopup(auth, googleProvider);
-    console.log(result);
-    localStorage.setItem("px_token", result.user.accessToken);
-    navigate("/home");
-  } catch (error) {
-    console.error(error);
-    toast.error(error.message);
-  }
-};
-
+    try {
+      console.log("Google login clicked");
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log(result);
+      localStorage.setItem("px_token", result.user.accessToken);
+      navigate("/home");
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
+  };
 
   const handleForgotPassword = async () => {
     if (!validateEmail(formData.email)) {
@@ -71,13 +58,12 @@ const AuthPage = () => {
     
     if (!isLogin) {
       if (formData.name.length < 3) newErrors.name = "Naam thoda bada!";
-      if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Match nahi hua!";
     }
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // --- DIRECT ENTRY (NO OTP) ---
+      // --- DIRECT ENTRY (NO FIREBASE CHECK) ---
       localStorage.setItem("px_token", "verified_user");
       toast.success(isLogin ? "Welcome Back! 🚀" : "Account Created! 🎉");
       window.location.href = "/home";
@@ -109,7 +95,7 @@ const AuthPage = () => {
                 value={formData.name}
                 onChange={(e) => setFormData({...formData, name: e.target.value})}
               />
-              {errors.name && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.name}</p>}
+              {errors.name && <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">{errors.name}</p>}
             </div>
           )}
 
@@ -122,7 +108,7 @@ const AuthPage = () => {
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
             />
-            {errors.email && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.email}</p>}
+            {errors.email && <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">{errors.email}</p>}
           </div>
 
           <div className="relative">
@@ -137,26 +123,12 @@ const AuthPage = () => {
             <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-3.5 text-primary/60">
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
-            {errors.password && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.password}</p>}
+            {errors.password && <p className="text-red-500 text-[10px] mt-1 ml-1 font-bold">{errors.password}</p>}
           </div>
-
-          {!isLogin && (
-            <div className="relative">
-              <ShieldCheck className="absolute left-3 top-3.5 w-5 h-5 text-primary/60" />
-              <Input 
-                type="password" 
-                placeholder="Confirm Password" 
-                className="pl-11 h-12 glass bg-transparent border-primary/20"
-                value={formData.confirmPassword}
-                onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-              />
-              {errors.confirmPassword && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.confirmPassword}</p>}
-            </div>
-          )}
 
           {isLogin && (
             <div className="text-right">
-              <button type="button" onClick={handleForgotPassword} className="text-xs text-primary hover:underline">
+              <button type="button" onClick={handleForgotPassword} className="text-xs text-primary hover:underline font-bold">
                 Forgot Password?
               </button>
             </div>
@@ -168,12 +140,12 @@ const AuthPage = () => {
 
           <div className="relative my-6 text-center">
             <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-primary/10"></span></div>
-            <span className="relative bg-background px-4 text-[10px] text-muted-foreground uppercase tracking-widest">Or continue with</span>
+            <span className="relative bg-background px-4 text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Or continue with</span>
           </div>
 
           <Button variant="outline" type="button" onClick={handleGoogleLogin} className="w-full h-12 glass border-primary/20 flex gap-3 rounded-xl hover:bg-primary/5 transition-all">
             <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-5 h-5" alt="G" />
-            <span className="text-sm font-medium">Google Account</span>
+            <span className="text-sm font-bold uppercase tracking-widest">Google Account</span>
           </Button>
         </form>
 
