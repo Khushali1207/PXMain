@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,18 @@ const AuthPage = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
+
+  // ✅ STEP 4: Capture token from Google redirect
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+
+    if (token) {
+      localStorage.setItem("px_token", token);
+      toast.success("Google login successful 🚀");
+      navigate("/home");
+    }
+  }, [navigate]);
 
   const validateEmail = (email) =>
     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
@@ -51,6 +63,11 @@ const AuthPage = () => {
     } catch (err) {
       toast.error(err.response?.data?.message || "Something went wrong");
     }
+  };
+
+  // ✅ STEP 3: Google login via backend OAuth
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5000/api/auth/google";
   };
 
   return (
@@ -111,6 +128,15 @@ const AuthPage = () => {
           </Button>
         </form>
 
+        {/* Google Login Button */}
+        <Button
+          variant="outline"
+          className="w-full mt-4"
+          onClick={handleGoogleLogin}
+        >
+          Continue with Google
+        </Button>
+
         <p className="mt-6 text-center text-sm">
           {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
           <button
@@ -129,3 +155,4 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
+
