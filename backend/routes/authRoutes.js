@@ -29,7 +29,7 @@ router.get(
       { expiresIn: "1d" }
     );
 
-    res.redirect(`http://localhost:5173/login?token=${token}`);
+    res.redirect(`https://px-main.vercel.app/login?token=${token}`);
   }
 );
 
