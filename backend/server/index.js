@@ -9,8 +9,16 @@ dotenv.config();
 
 const app = express();
 
-// 🔥 IMPORTANT FIX FOR RENDER + GOOGLE OAUTH
+// 🔥 TRUST PROXY (RENDER FIX)
 app.set("trust proxy", 1);
+
+// 🔥 FORCE HTTPS (THIS FIXES redirect_uri_mismatch)
+app.use((req, res, next) => {
+  if (req.headers["x-forwarded-proto"] !== "https") {
+    return res.redirect(`https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
 
 // Middlewares
 app.use(cors());
@@ -25,16 +33,15 @@ app.get("/", (req, res) => {
   res.send("Backend running ✅");
 });
 
-// MongoDB + Server start
+// Start server
+const PORT = process.env.PORT || 5000;
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
-
-    const PORT = process.env.PORT || 5000;
-
     app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((err) => {
