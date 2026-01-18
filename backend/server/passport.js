@@ -11,10 +11,8 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 
-      // 🔥 IMPORTANT: must be HTTPS here
-      callbackURL: "https://pxmain.onrender.com/api/auth/google/callback",
-
-      proxy: true   // 🔥 THIS forces passport to respect HTTPS behind Render proxy
+      // ✅ Always use HTTPS from env (fixes redirect_uri_mismatch forever)
+      callbackURL: `${process.env.BASE_URL}/api/auth/google/callback`,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -40,5 +38,3 @@ passport.use(
 );
 
 export default passport;
-
-
