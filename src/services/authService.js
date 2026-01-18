@@ -1,26 +1,27 @@
-// const API_URL = "http://localhost:5000/api/auth";
+import axios from "axios";
 
-// export async function loginUser(data) {
-//   const res = await fetch(`${API_URL}/login`, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(data)
-//   });
+const API_BASE = "https://pxmain.onrender.com/api/auth";
 
-//   if(!res.ok) throw new Error("Invalid login");
-//   return await res.json();
-// }
+// Normal login
+export const loginUser = async (email, password) => {
+  const res = await axios.post(`${API_BASE}/login`, {
+    email,
+    password,
+  });
+  return res.data;
+};
 
-import { useEffect } from "react";
-import { signInWithGoogle, handleRedirectResult } from "../lib/";
+// Normal signup
+export const signupUser = async (fullName, email, password) => {
+  const res = await axios.post(`${API_BASE}/signup`, {
+    fullName,
+    email,
+    password,
+  });
+  return res.data;
+};
 
-useEffect(() => {
-  handleRedirectResult()
-    .then((result) => {
-      if (result?.user) {
-        localStorage.setItem("px_token", result.user.accessToken);
-        navigate("/home");
-      }
-    })
-    .catch(console.error);
-}, []);
+// Google login (redirect to backend)
+export const googleLogin = () => {
+  window.location.href = `${API_BASE}/google`;
+};
