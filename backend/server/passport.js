@@ -10,14 +10,13 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-
-      // ✅ Always use HTTPS from env (fixes redirect_uri_mismatch forever)
-      callbackURL: `${process.env.BASE_URL}/api/auth/google/callback`,
+      callbackURL: "https://pxmain.onrender.com/api/auth/google/callback",
+      proxy: true
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
         const email = profile.emails?.[0]?.value;
-        if (!email) return done(new Error("No email from Google"), null);
+        if (!email) return done(new Error("No email"));
 
         let user = await User.findOne({ email });
 
@@ -29,9 +28,9 @@ passport.use(
           });
         }
 
-        return done(null, user);
+        done(null, user);
       } catch (err) {
-        return done(err, null);
+        done(err);
       }
     }
   )

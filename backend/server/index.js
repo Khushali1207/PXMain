@@ -9,15 +9,15 @@ dotenv.config();
 
 const app = express();
 
-// 🔥 TRUST PROXY (RENDER FIX)
-app.set("trust proxy", 1);
+// Trust Render proxy
+app.set("trust proxy", true);
 
-// 🔥 FORCE HTTPS (THIS FIXES redirect_uri_mismatch)
+// Force HTTPS (critical for Google OAuth)
 app.use((req, res, next) => {
-  if (req.headers["x-forwarded-proto"] !== "https") {
-    return res.redirect(`https://${req.headers.host}${req.url}`);
+  if (req.secure || req.headers["x-forwarded-proto"] === "https") {
+    return next();
   }
-  next();
+  res.redirect(`https://${req.headers.host}${req.url}`);
 });
 
 // Middlewares
@@ -28,12 +28,10 @@ app.use(passport.initialize());
 // Routes
 app.use("/api/auth", authRoutes);
 
-// Test route
 app.get("/", (req, res) => {
   res.send("Backend running ✅");
 });
 
-// Start server
 const PORT = process.env.PORT || 5000;
 
 mongoose
@@ -44,6 +42,5 @@ mongoose
       console.log(`Server running on port ${PORT}`);
     });
   })
-  .catch((err) => {
-    console.error("MongoDB connection error:", err);
-  });
+  .catch((err) => console.error(err));
+
