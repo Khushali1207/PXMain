@@ -12,7 +12,7 @@
 // }
 
 import { useEffect } from "react";
-import { signInWithGoogle, handleRedirectResult } from "../lib/firebase";
+import { signInWithGoogle, handleRedirectResult } from "../lib/";
 
 useEffect(() => {
   handleRedirectResult()

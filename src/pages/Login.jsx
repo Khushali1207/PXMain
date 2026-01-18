@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Lock, Mail, User, ShieldCheck, ArrowRight, Eye, EyeOff } from "lucide-react";
-import { auth, googleProvider } from "../lib/firebase"; 
-import { signInWithPopup, sendPasswordResetEmail } from "firebase/auth";
+import { auth, googleProvider } from "../lib/"; 
+import { signInWithPopup, sendPasswordResetEmail } from "/auth";
 
 const AuthPage = () => {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const AuthPage = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // --- DIRECT ENTRY (NO FIREBASE CHECK) ---
+      // --- DIRECT ENTRY (NO  CHECK) ---
       localStorage.setItem("px_token", "verified_user");
       toast.success(isLogin ? "Welcome Back! 🚀" : "Account Created! 🎉");
       window.location.href = "/home";

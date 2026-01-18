@@ -54,7 +54,7 @@
     "dotenv": "^17.2.3",
     "embla-carousel-react": "^8.6.0",
     "express": "^5.2.1",
-    "firebase": "^12.7.0",
+    "": "^12.7.0",
     "framer-motion": "^12.23.26",
     "input-otp": "^1.4.2",
     "jsonwebtoken": "^9.0.3",
