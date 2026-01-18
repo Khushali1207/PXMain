@@ -5,21 +5,21 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// 👇 THIS IS THE CRITICAL FIX
-passport.serializeUser((user, done) => done(null, user.id));
-passport.deserializeUser((id, done) => done(null, id));
-
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+
+      // 🔥 IMPORTANT: must be HTTPS here
       callbackURL: "https://pxmain.onrender.com/api/auth/google/callback",
-      proxy: true,
+
+      proxy: true   // 🔥 THIS forces passport to respect HTTPS behind Render proxy
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const email = profile.emails[0].value;
+        const email = profile.emails?.[0]?.value;
+        if (!email) return done(new Error("No email from Google"), null);
 
         let user = await User.findOne({ email });
 
@@ -40,4 +40,5 @@ passport.use(
 );
 
 export default passport;
+
 
